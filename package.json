@@ -1,0 +1,33 @@
+{
+  "name": "armwhip",
+  "version": "0.0.1",
+  "description": "Arm Whip",
+  "repository": {
+    "type": "git",
+    "url": "about:blank"
+  },
+  "devDependencies": {
+    "@types/three": "0.0.27",
+    "awesome-typescript-loader": "^3.0.0-beta.10",
+    "css-loader": "^0.23.1",
+    "file-loader": "^0.9.0",
+    "html-loader": "^0.4.4",
+    "json-loader": "^0.5.4",
+    "string-replace-loader": "^1.0.5",
+    "style-loader": "^0.13.1",
+    "tslint": "^3.14.0",
+    "tslint-loader": "^2.1.5",
+    "typescript": "^2.1.4",
+    "url-loader": "^0.5.7",
+    "webpack": "^1.13.1",
+    "webpack-dev-server": "^1.14.1"
+  },
+  "scripts": {
+    "prepublish": "webpack --color -p",
+    "watch": "webpack-dev-server --color -d --port 2020"
+  },
+  "dependencies": {
+    "font-awesome": "^4.7.0",
+    "three": "^0.82.1"
+  }
+}
