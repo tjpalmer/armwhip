@@ -1,7 +1,7 @@
 import {Body} from './';
 import {
-  AmbientLight, DirectionalLight,  OrthographicCamera, Scene, Vector2, Vector3,
-  WebGLRenderer,
+  AmbientLight, Color, DirectionalLight,  OrthographicCamera, Scene, Vector2,
+  Vector3, WebGLRenderer,
 } from 'three';
 
 export class Game {
@@ -17,11 +17,12 @@ export class Game {
     window.addEventListener('resize', () => this.resize());
     this.resize();
     // Scene.
-    this.scene = new Scene();
-    this.scene.add(new AmbientLight(0xFFFFFF, 0.5));
+    let scene = this.scene = new Scene();
+    scene.background = new Color(0x665544);
+    scene.add(new AmbientLight(0xFFFFFF, 0.5));
     let light = new DirectionalLight(0xFFFFFF, 1.0);
     light.position.set(1, 0, 1);
-    this.scene.add(light);
+    scene.add(light);
     this.body = new Body(this);
     this.body.buildScene();
     // Input.
