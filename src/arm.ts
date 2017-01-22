@@ -1,4 +1,4 @@
-import {Game} from './';
+import {Body, Game} from './';
 import {
   Bone, CylinderGeometry, MeshPhongMaterial, Object3D, Scene, Skeleton,
   SkeletonHelper, SkinnedMesh, Vector4,
@@ -6,8 +6,8 @@ import {
 
 export class Arm {
 
-  constructor(game: Game) {
-    this.game = game;
+  constructor(body: Body) {
+    this.game = body.game;
     let {bones} = this;
     let length = 1;
     // Keep segments odd, or else weird things happen at exactly 0.5.
@@ -40,9 +40,9 @@ export class Arm {
       skinIndices.push(new Vector4(index, index + 1, 0, 0));
       skinWeights.push(new Vector4(1 - weight, weight, 0, 0));
     }
-    let mesh = new SkinnedMesh(
-      geometry, new MeshPhongMaterial({color: 0xA04020, skinning: true}),
-    );
+    let mesh = new SkinnedMesh(geometry, new MeshPhongMaterial({
+      color: body.skinMaterial.color.getHex(), skinning: true,
+    }));
     mesh.add(bones[0]);
     mesh.bind(skeleton);
     let helper = new SkeletonHelper(mesh);
@@ -52,7 +52,8 @@ export class Arm {
 
   bones = [] as Array<Bone>;
 
-  buildScene(scene: Scene) {
+  buildScene() {
+    let {scene} = this.game;
     scene.add(this.mesh);
     // scene.add(this.helper);
   }

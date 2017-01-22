@@ -1,4 +1,4 @@
-import {Arm} from './';
+import {Body} from './';
 import {
   AmbientLight, DirectionalLight,  OrthographicCamera, Scene, Vector2, Vector3,
   WebGLRenderer,
@@ -22,8 +22,8 @@ export class Game {
     let light = new DirectionalLight(0xFFFFFF, 1.0);
     light.position.set(1, 0, 1);
     this.scene.add(light);
-    this.arm = new Arm(this);
-    this.arm.buildScene(this.scene);
+    this.body = new Body(this);
+    this.body.buildScene();
     // Input.
     window.document.addEventListener('mousemove', event => {
       let {clientX, clientY} = event;
@@ -34,7 +34,7 @@ export class Game {
     });
   }
 
-  arm: Arm;
+  body: Body;
 
   camera: OrthographicCamera;
 
@@ -43,7 +43,7 @@ export class Game {
   render() {
     // Prep next frame first for best fps.
     requestAnimationFrame(() => this.render());
-    this.arm.update();
+    this.body.update();
     this.renderer.render(this.scene, this.camera);
   }
 
