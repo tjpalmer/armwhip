@@ -1,3 +1,4 @@
+import {Game} from './';
 import {
   Bone, CylinderGeometry, MeshPhongMaterial, Object3D, Scene, Skeleton,
   SkeletonHelper, SkinnedMesh, Vector4,
@@ -5,9 +6,12 @@ import {
 
 export class Arm {
 
-  constructor() {
+  constructor(game: Game) {
+    this.game = game;
     let {bones} = this;
     let length = 1;
+    // Keep segments odd, or else weird things happen at exactly 0.5.
+    // Could fix that, but eh.
     let segmentCount = 7;
     let segmentLength = length / segmentCount;
     let boneCount = segmentCount + 1;
@@ -53,13 +57,15 @@ export class Arm {
     // scene.add(this.helper);
   }
 
+  game: Game;
+
   helper: SkeletonHelper;
 
   mesh: Object3D;
 
   update() {
     for (let bone of this.bones) {
-      bone.rotation.z = Math.sin(Date.now() * 1e-3) / this.bones.length;
+      bone.rotation.z = -this.game.point.x / this.bones.length;
     }
     this.helper.update();
   }

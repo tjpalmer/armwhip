@@ -1,6 +1,6 @@
 import {Arm} from './';
 import {
-  AmbientLight, DirectionalLight,  OrthographicCamera, Scene, Vector2,
+  AmbientLight, DirectionalLight,  OrthographicCamera, Scene, Vector2, Vector3,
   WebGLRenderer,
 } from 'three';
 
@@ -8,6 +8,7 @@ export class Game {
 
   constructor() {
     let {body} = window.document;
+    // Renderer and camera.
     let canvas = body.getElementsByTagName('canvas')[0];
     let renderer = this.renderer = new WebGLRenderer({canvas});
     this.camera = new OrthographicCamera(-1, 1, 1, -1, -1, 1);
@@ -15,18 +16,29 @@ export class Game {
     // Resize handling after renderer and camera.
     window.addEventListener('resize', () => this.resize());
     this.resize();
+    // Scene.
     this.scene = new Scene();
     this.scene.add(new AmbientLight(0xFFFFFF, 0.5));
     let light = new DirectionalLight(0xFFFFFF, 1.0);
     light.position.set(1, 0, 1);
     this.scene.add(light);
-    this.arm = new Arm();
+    this.arm = new Arm(this);
     this.arm.buildScene(this.scene);
+    // Input.
+    window.document.addEventListener('mousemove', event => {
+      let {clientX, clientY} = event;
+      let {point} = this;
+      point.x = 2 * event.clientX / window.innerWidth - 1;
+      point.y = -(2 * event.clientY / window.innerHeight - 1);
+      point.unproject(this.camera);
+    });
   }
 
   arm: Arm;
 
   camera: OrthographicCamera;
+
+  point = new Vector3();
 
   render() {
     // Prep next frame first for best fps.
