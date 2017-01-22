@@ -8,7 +8,7 @@ export class Arm {
   constructor() {
     let {bones} = this;
     let length = 1;
-    let segmentCount = 10;
+    let segmentCount = 7;
     let segmentLength = length / segmentCount;
     let boneCount = segmentCount + 1;
     let prevBone: Bone | undefined = undefined;
@@ -25,7 +25,7 @@ export class Arm {
       prevBone = bone;
     }
     let skeleton = new Skeleton(bones);
-    let geometry = new CylinderGeometry(0, 0.1, 1, 6, 10);
+    let geometry = new CylinderGeometry(0, 0.1, 1, 6, 3 * segmentCount);
     // Work around typing problem again.
     let skinIndices = geometry.skinIndices as any as Array<Vector4>;
     let skinWeights = geometry.skinWeights as any as Array<Vector4>;
@@ -35,10 +35,9 @@ export class Arm {
       let weight = (y % segmentLength) / segmentLength;
       skinIndices.push(new Vector4(index, index + 1, 0, 0));
       skinWeights.push(new Vector4(1 - weight, weight, 0, 0));
-      console.log(vertex.y, index, index + 1, 1 - weight, weight);
     }
     let mesh = new SkinnedMesh(
-      geometry, new MeshPhongMaterial({color: 0xA04020}),
+      geometry, new MeshPhongMaterial({color: 0xA04020, skinning: true}),
     );
     mesh.add(bones[0]);
     mesh.bind(skeleton);
@@ -51,7 +50,7 @@ export class Arm {
 
   buildScene(scene: Scene) {
     scene.add(this.mesh);
-    scene.add(this.helper);
+    // scene.add(this.helper);
   }
 
   helper: SkeletonHelper;
@@ -63,8 +62,6 @@ export class Arm {
       bone.rotation.z = Math.sin(Date.now() * 1e-3) / this.bones.length;
     }
     this.helper.update();
-    // this.mesh.updateMatrix();
-    // this.mesh.updateMatrixWorld(true);
   }
 
 }
