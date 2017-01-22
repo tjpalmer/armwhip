@@ -1,6 +1,2 @@
-app.js
-debug.log
-import/
 node_modules/
-notes/
-vendor.js
+.vscode/
