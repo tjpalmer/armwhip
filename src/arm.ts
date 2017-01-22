@@ -7,6 +7,7 @@ import {
 export class Arm {
 
   constructor(body: Body) {
+    this.body = body;
     this.game = body.game;
     let {bones} = this;
     let length = 1;
@@ -50,6 +51,8 @@ export class Arm {
     this.helper = helper;
   }
 
+  body: Body;
+
   bones = [] as Array<Bone>;
 
   buildScene() {
@@ -66,7 +69,8 @@ export class Arm {
 
   update() {
     for (let bone of this.bones) {
-      bone.rotation.z = -this.game.point.x / this.bones.length;
+      let targetAngle = this.body.deltaAngle / this.bones.length;
+      bone.rotation.z = bone.rotation.z * 0.9 + targetAngle * 0.1;
     }
     this.helper.update();
   }
