@@ -1,13 +1,17 @@
-## Other Info
+## Overview
 
 It got called Arm Whip because I planned a different movement mechanic.
 Not sure what else to call it at this point.
+
+Control is purely by mouse movement.
+
 
 ## License
 
 Source code in the repository is distributed under [CC0 1.0 Universal license](
   https://creativecommons.org/publicdomain/zero/1.0/legalcode
 ).
+
 
 ## Third Party
 
