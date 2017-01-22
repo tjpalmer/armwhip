@@ -1,4 +1,4 @@
-import {Body} from './';
+import {Body, Fish} from './';
 import {
   AmbientLight, Color, DirectionalLight,  OrthographicCamera, Scene, Vector2,
   Vector3, WebGLRenderer,
@@ -11,7 +11,7 @@ export class Game {
     // Renderer and camera.
     let canvas = body.getElementsByTagName('canvas')[0];
     let renderer = this.renderer = new WebGLRenderer({canvas});
-    this.camera = new OrthographicCamera(-1, 1, 1, -1, -1, 1);
+    this.camera = new OrthographicCamera(-1, 1, 1, -1, 0, 2);
     this.camera.position.z = 1;
     // Resize handling after renderer and camera.
     window.addEventListener('resize', () => this.resize());
@@ -25,6 +25,11 @@ export class Game {
     scene.add(light);
     this.body = new Body(this);
     this.body.buildScene();
+    for (let i = 0; i < 5; ++i) {
+      let fish = new Fish(this);
+      this.fishes.push(fish);
+      fish.buildScene();
+    }
     // Input.
     window.document.addEventListener('mousemove', event => {
       let {clientX, clientY} = event;
@@ -39,12 +44,17 @@ export class Game {
 
   camera: OrthographicCamera;
 
+  fishes = [] as Array<Fish>;
+
   point = new Vector3();
 
   render() {
     // Prep next frame first for best fps.
     requestAnimationFrame(() => this.render());
     this.body.update();
+    for (let fish of this.fishes) {
+      fish.update();
+    }
     this.renderer.render(this.scene, this.camera);
   }
 
