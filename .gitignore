@@ -1,2 +1,5 @@
+app.js
 node_modules/
+notes/
 .vscode/
+vendor.js

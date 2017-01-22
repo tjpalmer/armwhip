@@ -1,6 +1,5 @@
 import {Game} from './';
 import './index.css';
-import 'font-awesome';
 
 window.onload = main;
 

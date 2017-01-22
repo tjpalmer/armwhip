@@ -27,7 +27,6 @@
     "watch": "webpack-dev-server --color -d --port 2020"
   },
   "dependencies": {
-    "font-awesome": "^4.7.0",
     "three": "^0.84.0"
   }
 }
