@@ -40,9 +40,9 @@ export class Arm {
       skinIndices.push(new Vector4(index, index + 1, 0, 0));
       skinWeights.push(new Vector4(1 - weight, weight, 0, 0));
     }
-    let mesh = new SkinnedMesh(geometry, new MeshPhongMaterial({
-      color: body.skinMaterial.color.getHex(), skinning: true,
-    }));
+    let material = body.skinMaterial.clone();
+    material.skinning = true;
+    let mesh = new SkinnedMesh(geometry, material);
     mesh.add(bones[0]);
     mesh.bind(skeleton);
     let helper = new SkeletonHelper(mesh);
