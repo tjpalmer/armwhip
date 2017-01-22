@@ -1,5 +1,6 @@
+import {Arm} from './';
 import {
-  BoxGeometry, Mesh, MeshBasicMaterial, OrthographicCamera, Scene, Vector2,
+  AmbientLight, DirectionalLight,  OrthographicCamera, Scene, Vector2,
   WebGLRenderer,
 } from 'three';
 
@@ -15,18 +16,22 @@ export class Game {
     window.addEventListener('resize', () => this.resize());
     this.resize();
     this.scene = new Scene();
-    this.scene.add(new Mesh(
-      new BoxGeometry(0.1, 0.1, 0.1),
-      new MeshBasicMaterial(),
-    ));
+    this.scene.add(new AmbientLight(0xFFFFFF, 0.5));
+    let light = new DirectionalLight(0xFFFFFF, 1.0);
+    light.position.set(1, 0, 1);
+    this.scene.add(light);
+    this.arm = new Arm();
+    this.arm.buildScene(this.scene);
   }
+
+  arm: Arm;
 
   camera: OrthographicCamera;
 
   render() {
     // Prep next frame first for best fps.
     requestAnimationFrame(() => this.render());
-    // TODO Update scene.
+    this.arm.update();
     this.renderer.render(this.scene, this.camera);
   }
 
