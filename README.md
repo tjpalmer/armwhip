@@ -5,6 +5,10 @@ Not sure what else to call it at this point.
 
 Control is purely by mouse movement.
 
+Runs smoothest in Chrome or Edge, by my testing.
+
+Live at: https://tjpalmer.github.io/armwhip/
+
 
 ## License
 
